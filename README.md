@@ -39,3 +39,13 @@ Acessos:
 docker compose down          # para os containers
 docker compose down -v       # para e apaga os volumes (perde dados salvos)
 ```
+
+## Evidência de execução
+
+**Data source do Prometheus conectado com sucesso:**
+
+![data source conectado](./docs/datasource-connected.png)
+
+**Dashboard com métricas reais de CPU e memória do ThinkCentre, capturadas pelo Node Exporter:**
+
+![dashboard CPU e memória](./docs/dashboard-cpu-memory.png)
