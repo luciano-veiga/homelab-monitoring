@@ -1,0 +1,89 @@
+# Runbook: Troubleshooting SNMP no MikroTik
+
+## Contexto
+
+MikroTik hEX S com SNMP habilitado mas sem resposta as consultas do servidor de monitoramento.
+
+## Sintoma
+
+snmpwalk -v2c -c public 192.168.88.1 1.3.6.1.2.1.1
+Timeout: No Response from 192.168.88.1
+
+Ping ICMP funcionava normalmente, descartando problema basico de rede.
+
+## Diagnostico
+
+### 1. Conectividade basica
+
+ping -c 4 192.168.88.1
+
+Resultado: OK, 0% de perda. Problema e especifico do SNMP, nao de rede.
+
+### 2. Firewall do MikroTik
+
+Configuracao padrao do MikroTik inclui a regra:
+
+defconf: drop all not coming from LAN (chain=input, action=drop, in-interface-list=!LAN)
+
+Trafego de entrada fora da lista LAN e descartado, incluindo SNMP.
+
+### 3. Regra explicita liberando SNMP
+
+Criada regra de firewall especifica:
+
+- Chain: input
+- Protocol: 17 (udp)
+- Dst. Port: 161
+- Src. Address: 192.168.88.0/24
+- Action: accept
+- Comment: Libera SNMP leitura - ISP Observability Lab
+
+Importante: a regra precisa ficar ANTES da regra de drop na lista, senao nunca e avaliada.
+
+Evidencia: ![regra de firewall ordenada](./mikrotik-firewall-snmp-rule-ordenada.png)
+
+### 4. Ajuste do campo Dst. Address
+
+Na primeira tentativa, o campo Dst. Address ficou com 0.0.0.0, que so daria match se o destino fosse exatamente esse endereco. Corrigido para o IP real do equipamento (192.168.88.1).
+
+Evidencia: ![regra de firewall corrigida](./mikrotik-firewall-snmp-rule-corrigida.png)
+
+### 5. Confirmacao de que o pacote batia na regra
+
+Com o contador de Packets visivel no Winbox, confirmado em tempo real que o pacote SNMP era aceito pela regra ao rodar o snmpwalk. Isso descartou o firewall como causa apos o ajuste.
+
+### 6. Causa raiz: community SNMP desabilitada
+
+Em IP > SNMP > Communities, a community "public" estava desabilitada (icone X, texto acinzentado), enquanto "v3only" era a ativa por padrao.
+
+Evidencia: ![community habilitada apos correcao](./mikrotik-snmp-community-habilitada.png)
+
+## Solucao
+
+1. Selecionar a community "public"
+2. Clicar em "Enable"
+3. Testar novamente
+
+## Resultado
+
+snmpwalk -v2c -c public 192.168.88.1 1.3.6.1.2.1.1
+iso.3.6.1.2.1.1.1.0 = STRING: "RouterOS RB760iGS"
+iso.3.6.1.2.1.1.4.0 = STRING: "Luciano"
+iso.3.6.1.2.1.1.5.0 = STRING: "HomeLab"
+
+Evidencia: ![snmpwalk com sucesso](./mikrotik-snmpwalk-sucesso.png)
+
+## Checklist para proximas ocorrencias
+
+- [ ] SNMP desabilitado globalmente (IP > SNMP > Enabled)
+- [ ] Firewall bloqueando porta 161/UDP na chain input
+- [ ] Regra de firewall fora de ordem (depois de uma regra de drop)
+- [ ] Campo Dst. Address da regra incorreto
+- [ ] Community SNMP desabilitada
+- [ ] Community com campo Addresses restringindo IPs
+
+## Equipamento de referencia
+
+- Modelo: MikroTik hEX S (RouterOS RB760iGS)
+- RouterOS: 6.49.20 (long-term)
+- IP de gerencia: 192.168.88.1
