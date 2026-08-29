@@ -41,6 +41,15 @@ services:
     ports:
       - "9100:9100"
 
+  snmp-exporter:
+    image: prom/snmp-exporter:latest
+    container_name: snmp-exporter
+    restart: unless-stopped
+    volumes:
+      - ./snmp_exporter/snmp.yml:/etc/snmp_exporter/snmp.yml:ro
+    ports:
+      - "9116:9116"
+
 volumes:
   prometheus_data:
   grafana_data:
