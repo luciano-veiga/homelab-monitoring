@@ -16,3 +16,12 @@ Registro cronológico da evolução deste laboratório de observabilidade.
 - Troubleshooting real documentado em docs/runbooks/snmp-troubleshooting-mikrotik.md: firewall bloqueando porta 161/UDP e community SNMP desabilitada
 - Adicionado MikroTik ao docs/inventory.md e docs/stability-criteria.md
 - Validado com sucesso via snmpwalk a partir do ThinkCentre
+
+## 2026-08-29
+
+- Integrado MikroTik ao Prometheus via snmp_exporter (modulo if_mib)
+- Troubleshooting documentado: incompatibilidade de versao entre snmp.yml (branch main) e imagem snmp-exporter (0.30.1), resolvido usando snmp.yml da tag v0.30.1
+- Troubleshooting documentado: bind mount do prometheus.yml nao atualizava com restart, resolvido com docker compose down + up
+- Job mikrotik-snmp confirmado com health up no Prometheus
+- Integracao validada visualmente no Grafana (Explore) com metrica ifHCInOctets da interface ether2
+- Atualizado docs/inventory.md, docs/stability-criteria.md e docs/runbooks/snmp-troubleshooting-mikrotik.md

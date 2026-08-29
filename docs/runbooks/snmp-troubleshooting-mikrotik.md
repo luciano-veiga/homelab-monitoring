@@ -87,3 +87,34 @@ Evidencia: ![snmpwalk com sucesso](../mikrotik-snmpwalk-sucesso.png)
 - Modelo: MikroTik hEX S (RouterOS RB760iGS)
 - RouterOS: 6.49.20 (long-term)
 - IP de gerencia: 192.168.88.1
+
+## Adendo: integracao com Prometheus via snmp_exporter
+
+Apos validar o SNMP manualmente, o proximo passo foi integrar ao Prometheus via snmp_exporter. Dois problemas adicionais surgiram nesse processo.
+
+### Problema 1: incompatibilidade de versao do snmp.yml
+
+O arquivo snmp_exporter/snmp.yml foi baixado da branch main do projeto, que continha campos novos (enum_values) nao suportados pela imagem prom/snmp-exporter:latest (versao 0.30.1 instalada). O container entrava em crash loop.
+
+Solucao: baixar o snmp.yml da tag correspondente a versao instalada:
+
+curl -o snmp_exporter/snmp.yml https://raw.githubusercontent.com/prometheus/snmp_exporter/v0.30.1/snmp.yml
+
+Licao: sempre baixar arquivos de configuracao gerados a partir de uma tag de versao especifica, nunca da branch main/latest, quando a imagem do container esta fixada em uma versao.
+
+### Problema 2: bind mount nao atualizava apos restart
+
+Apos editar o prometheus.yml adicionando o job mikrotik-snmp, um docker compose restart prometheus nao refletia a mudanca dentro do container (confirmado com docker exec prometheus cat /etc/prometheus/prometheus.yml mostrando o arquivo antigo).
+
+Solucao: recriar o container ao inves de apenas reiniciar o processo:
+
+docker compose down prometheus
+docker compose up -d prometheus
+
+Licao: quando uma alteracao em arquivo de configuracao montado via bind mount nao aparece apos restart, testar com down + up antes de investigar hipoteses mais complexas.
+
+### Resultado final
+
+Job mikrotik-snmp confirmado com health up no Prometheus, consultando via proxy snmp-exporter:9116. Integracao validada visualmente no Grafana (Explore) com a metrica ifHCInOctets da interface ether2, mostrando trafego real crescendo ao longo do tempo.
+
+Evidencia: ![trafego MikroTik no Grafana](./grafana-mikrotik-snmp-trafego.png)
