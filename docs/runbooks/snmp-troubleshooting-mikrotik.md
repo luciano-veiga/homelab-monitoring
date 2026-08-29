@@ -118,3 +118,7 @@ Licao: quando uma alteracao em arquivo de configuracao montado via bind mount na
 Job mikrotik-snmp confirmado com health up no Prometheus, consultando via proxy snmp-exporter:9116. Integracao validada visualmente no Grafana (Explore) com a metrica ifHCInOctets da interface ether2, mostrando trafego real crescendo ao longo do tempo.
 
 Evidencia: ![trafego MikroTik no Grafana](./grafana-mikrotik-snmp-trafego.png)
+
+## Otimizacao: reducao do snmp.yml
+
+O arquivo snmp_exporter/snmp.yml oficial vem com centenas de modulos para diversos fabricantes (2MB). Como o laboratorio usa apenas o modulo if_mib por enquanto, o arquivo foi reduzido para conter somente esse modulo (34KB), usando um script Python com PyYAML para extrair apenas as chaves auths e modules.if_mib. Reducao de mais de 98% no tamanho do arquivo versionado, sem perda de funcionalidade.
