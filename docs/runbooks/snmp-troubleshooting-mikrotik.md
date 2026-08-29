@@ -40,13 +40,13 @@ Criada regra de firewall especifica:
 
 Importante: a regra precisa ficar ANTES da regra de drop na lista, senao nunca e avaliada.
 
-Evidencia: ![regra de firewall ordenada](./mikrotik-firewall-snmp-rule-ordenada.png)
+Evidencia: ![regra de firewall ordenada](../mikrotik-firewall-snmp-rule-ordenada.png)
 
 ### 4. Ajuste do campo Dst. Address
 
 Na primeira tentativa, o campo Dst. Address ficou com 0.0.0.0, que so daria match se o destino fosse exatamente esse endereco. Corrigido para o IP real do equipamento (192.168.88.1).
 
-Evidencia: ![regra de firewall corrigida](./mikrotik-firewall-snmp-rule-corrigida.png)
+Evidencia: ![regra de firewall corrigida](../mikrotik-firewall-snmp-rule-corrigida.png)
 
 ### 5. Confirmacao de que o pacote batia na regra
 
@@ -56,7 +56,7 @@ Com o contador de Packets visivel no Winbox, confirmado em tempo real que o paco
 
 Em IP > SNMP > Communities, a community "public" estava desabilitada (icone X, texto acinzentado), enquanto "v3only" era a ativa por padrao.
 
-Evidencia: ![community habilitada apos correcao](./mikrotik-snmp-community-habilitada.png)
+Evidencia: ![community habilitada apos correcao](../mikrotik-snmp-community-habilitada.png)
 
 ## Solucao
 
@@ -71,7 +71,7 @@ iso.3.6.1.2.1.1.1.0 = STRING: "RouterOS RB760iGS"
 iso.3.6.1.2.1.1.4.0 = STRING: "Luciano"
 iso.3.6.1.2.1.1.5.0 = STRING: "HomeLab"
 
-Evidencia: ![snmpwalk com sucesso](./mikrotik-snmpwalk-sucesso.png)
+Evidencia: ![snmpwalk com sucesso](../mikrotik-snmpwalk-sucesso.png)
 
 ## Checklist para proximas ocorrencias
 
