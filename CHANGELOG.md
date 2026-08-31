@@ -25,3 +25,13 @@ Registro cronológico da evolução deste laboratório de observabilidade.
 - Job mikrotik-snmp confirmado com health up no Prometheus
 - Integracao validada visualmente no Grafana (Explore) com metrica ifHCInOctets da interface ether2
 - Atualizado docs/inventory.md, docs/stability-criteria.md e docs/runbooks/snmp-troubleshooting-mikrotik.md
+
+## 2026-08-30
+
+- Adicionado Zabbix (server, web, banco PostgreSQL) via Docker Compose como segundo pilar de monitoramento
+- Troubleshooting documentado: conflito de porta 8080 com container evolution-evolution-api-1, resolvido mapeando zabbix-web para porta 8081
+- Senha padrao do usuario Admin do Zabbix trocada por seguranca
+- Host MikroTik HomeLab criado no Zabbix via SNMP, com template Network Generic Device by SNMP
+- Troubleshooting documentado: campo SNMP community pre-preenchido incorretamente, corrigido para "public"
+- Confirmados 75 itens coletando dados reais via LLD (ICMP + interfaces, incluindo pppoe-out1)
+- Atualizado docs/inventory.md, docs/stability-criteria.md; criado docs/runbooks/zabbix-setup-troubleshooting.md

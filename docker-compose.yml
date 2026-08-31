@@ -50,6 +50,48 @@ services:
     ports:
       - "9116:9116"
 
+  zabbix-db:
+    image: postgres:16
+    container_name: zabbix-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=zabbix
+      - POSTGRES_DB=zabbix
+    volumes:
+      - zabbix_db_data:/var/lib/postgresql/data
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:latest
+    container_name: zabbix-server
+    restart: unless-stopped
+    environment:
+      - DB_SERVER_HOST=zabbix-db
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=zabbix
+      - POSTGRES_DB=zabbix
+    ports:
+      - "10051:10051"
+    depends_on:
+      - zabbix-db
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-pgsql:latest
+    container_name: zabbix-web
+    restart: unless-stopped
+    environment:
+      - DB_SERVER_HOST=zabbix-db
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=zabbix
+      - POSTGRES_DB=zabbix
+      - ZBX_SERVER_HOST=zabbix-server
+      - PHP_TZ=America/Bahia
+    ports:
+      - "8081:8080"
+    depends_on:
+      - zabbix-server
+
 volumes:
   prometheus_data:
   grafana_data:
+  zabbix_db_data:
