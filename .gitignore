@@ -1,0 +1,20 @@
+# Ambiente e segredos
+.env
+*.env.local
+*.pem
+*.key
+
+# Dados de volumes (nunca devem ser versionados)
+prometheus_data/
+grafana_data/
+zabbix_db_data/
+
+# Sistema operacional / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Logs
+*.log

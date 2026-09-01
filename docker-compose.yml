@@ -1,5 +1,9 @@
 version: "3.9"
 
+# NOTA DE SEGURANÇA: as credenciais abaixo (Grafana admin/admin, Postgres do
+# Zabbix zabbix/zabbix) são valores padrão para ambiente local de laboratório.
+# Nunca reutilize essas credenciais em um ambiente de produção.
+
 services:
   prometheus:
     image: prom/prometheus:latest
