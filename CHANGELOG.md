@@ -35,3 +35,12 @@ Registro cronológico da evolução deste laboratório de observabilidade.
 - Troubleshooting documentado: campo SNMP community pre-preenchido incorretamente, corrigido para "public"
 - Confirmados 75 itens coletando dados reais via LLD (ICMP + interfaces, incluindo pppoe-out1)
 - Atualizado docs/inventory.md, docs/stability-criteria.md; criado docs/runbooks/zabbix-setup-troubleshooting.md
+
+## 2026-08-31
+
+- Atualizada documentação para refletir o estado real do repositório após as Etapas 2 e 3
+- README.md: stack, roadmap e evidências atualizados (MikroTik/SNMP e Zabbix)
+- Adicionado docs/architecture.md (visão geral dos componentes e decisões de design)
+- Adicionado docs/topology.md (topologia de rede do MikroTik)
+- Adicionado .gitignore
+- Adicionada nota de segurança no docker-compose.yml sobre credenciais padrão
