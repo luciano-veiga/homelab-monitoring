@@ -11,3 +11,5 @@ Lista viva de tudo que esta sendo monitorado neste laboratorio. Atualizar sempre
 | Zabbix (server + web + db) | Serviço de monitoramento | Docker Compose | 8081 (web), 10051 (server) | Ativo | 2026-08-30 |
 | MikroTik hEX S (via Zabbix) | Roteador | SNMP v2c direto no Zabbix (host MikroTik HomeLab) | 161/UDP | Ativo | 2026-08-30 |
 | ThinkCentre M720s (via Zabbix Agent) | Servidor | Zabbix Agent (active) | 10050 | Ativo | 2026-09-02 |
+| Alertmanager | Serviço de alertas | Recebe alertas do Prometheus | 9093 | Ativo | 2026-09-06 |
+| webhook-receiver | Serviço de teste | HTTP local (Python) | 5001 | Ativo | 2026-09-06 |

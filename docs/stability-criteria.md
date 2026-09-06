@@ -11,6 +11,7 @@ Este documento define os indicadores (SLI) e objetivos (SLO) de estabilidade par
 | MikroTik (SNMP via Prometheus) | Disponibilidade do target mikrotik-snmp | up{job="mikrotik-snmp"} == 1 por >= 99% do tempo em janela de 24h | Query no Prometheus + grafico no Grafana |
 | Zabbix | Disponibilidade do zabbix-server | Zabbix server is running = Yes por >= 99% do tempo | Dashboard Global view + item zabbix[process,...] |
 | Zabbix Agent (ThinkCentre) | Disponibilidade do host ThinkCentre M720s | Status Enabled/Available no Zabbix por >= 99% do tempo | Latest data + coluna Availability |
+| Alertmanager | Alerta HighCPUUsageThinkCentre dispara e é entregue | Transição inactive -> pending -> firing em <= 3min após condição real, entregue em e-mail e webhook | Teste com stress-ng + curl /api/v1/rules + curl /api/v2/alerts + log do webhook
 
 ## Histórico de validação
 
@@ -24,3 +25,4 @@ Este documento define os indicadores (SLI) e objetivos (SLO) de estabilidade par
 | 2026-08-30 | Zabbix (server+web+db) | up | Dashboard Global view, Zabbix server is running: Yes |
 | 2026-08-30 | MikroTik hEX S (via Zabbix) | up | Latest data com 75 itens coletando (LLD SNMP) |
 | 2026-09-02 | ThinkCentre M720s (Zabbix Agent) | up | 43 items, 15 triggers, 8 graphs coletando via Latest data |
+| 2026-09-06 | Alertmanager (regra HighCPUUsageThinkCentre) | firing e entregue | stress-ng gerou CPU real >85%%; alerta passou inactive->pending->firing; recebido no Alertmanager (state: active); entregue por e-mail e webhook (alerts.log) |
