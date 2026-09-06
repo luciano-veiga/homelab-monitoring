@@ -11,6 +11,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./rules.yml:/etc/prometheus/rules.yml:ro
       - prometheus_data:/prometheus
     ports:
       - "9090:9090"
@@ -53,6 +54,27 @@ services:
       - ./snmp_exporter/snmp.yml:/etc/snmp_exporter/snmp.yml:ro
     ports:
       - "9116:9116"
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: alertmanager
+    restart: unless-stopped
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+    ports:
+      - "9093:9093"
+  webhook-receiver:
+    image: python:3.11-slim
+    container_name: webhook-receiver
+    restart: unless-stopped
+    volumes:
+      - ./webhook-receiver:/app
+    working_dir: /app
+    command: python webhook_receiver.py
+    ports:
+      - "5001:5001"
 
   zabbix-db:
     image: postgres:16
