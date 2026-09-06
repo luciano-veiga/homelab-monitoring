@@ -52,3 +52,13 @@ Registro cronológico da evolução deste laboratório de observabilidade.
 - Confirmados 43 items, 15 triggers, 8 graphs e 3 discovery rules coletando dados reais
 - Atualizado docs/inventory.md e docs/stability-criteria.md
 - Etapa 3 (Zabbix) concluida: MikroTik monitorado via SNMP e ThinkCentre via Agent, ambos em paralelo ao Prometheus/Grafana
+## 2026-09-06
+- Iniciada a Etapa 05 (Alertmanager) para gerar alertas reais a partir das metricas ja coletadas pelo Prometheus
+- Adicionado Alertmanager (prom/alertmanager) e webhook-receiver (servidor Python simples) ao docker-compose.yml
+- Criado rules.yml com 3 regras: HighCPUUsageThinkCentre, HighDiskUsageThinkCentre e InstanceDown
+- Configurado roteamento duplo no Alertmanager: e-mail via Gmail SMTP e webhook local, com inhibit_rules
+- Credenciais protegidas via .gitignore (apenas alertmanager.yml.example versionado)
+- Troubleshooting documentado em docs/runbooks/alertmanager-troubleshooting.md: heredoc no lugar de download+cp, delimitador do sed cortando senha com barra, buffering de log do Python
+- Teste real de ponta a ponta com stress-ng: alerta HighCPUUsageThinkCentre transicionou inactive -> pending -> firing -> resolved, confirmado no Prometheus, no Alertmanager, por e-mail e por webhook (webhook-receiver/alerts.log)
+- Atualizado docs/inventory.md e docs/stability-criteria.md
+- Etapa 05 (Alertmanager) concluida para a regra HighCPUUsageThinkCentre; HighDiskUsageThinkCentre e InstanceDown ainda pendentes de teste real
