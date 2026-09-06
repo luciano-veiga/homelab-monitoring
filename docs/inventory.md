@@ -10,3 +10,4 @@ Lista viva de tudo que esta sendo monitorado neste laboratorio. Atualizar sempre
 | MikroTik hEX S (HomeLab) | Roteador | SNMP v2c via snmp_exporter (Prometheus) | 161/UDP + 9116/TCP | Ativo | 2026-08-28 |
 | Zabbix (server + web + db) | Serviço de monitoramento | Docker Compose | 8081 (web), 10051 (server) | Ativo | 2026-08-30 |
 | MikroTik hEX S (via Zabbix) | Roteador | SNMP v2c direto no Zabbix (host MikroTik HomeLab) | 161/UDP | Ativo | 2026-08-30 |
+| ThinkCentre M720s (via Zabbix Agent) | Servidor | Zabbix Agent (active) | 10050 | Ativo | 2026-09-02 |

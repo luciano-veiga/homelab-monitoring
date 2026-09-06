@@ -44,3 +44,11 @@ Registro cronológico da evolução deste laboratório de observabilidade.
 - Adicionado docs/topology.md (topologia de rede do MikroTik)
 - Adicionado .gitignore
 - Adicionada nota de segurança no docker-compose.yml sobre credenciais padrão
+
+## 2026-09-02
+
+- Adicionado Zabbix Agent (zabbix/zabbix-agent2) monitorando o proprio ThinkCentre M720s
+- Host ThinkCentre M720s criado no Zabbix com template Linux by Zabbix agent active
+- Confirmados 43 items, 15 triggers, 8 graphs e 3 discovery rules coletando dados reais
+- Atualizado docs/inventory.md e docs/stability-criteria.md
+- Etapa 3 (Zabbix) concluida: MikroTik monitorado via SNMP e ThinkCentre via Agent, ambos em paralelo ao Prometheus/Grafana
