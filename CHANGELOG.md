@@ -1,16 +1,5 @@
 # Changelog
 
-
-## Etapa 04 — Documentação de Arquitetura e Topologia
-
-### Adicionado
-- `docs/architecture.md`: visão geral da arquitetura do laboratório, componentes de cada stack (Prometheus/Grafana e Zabbix), fluxo de dados, decisões de arquitetura (módulo SNMP genérico vs. proprietário, coleta em paralelo por dois sistemas, bind mounts) e próximos passos.
-- `docs/topology.md`: diagrama de topologia física e lógica, detalhamento das interfaces do MikroTik hEX S (WAN principal via ether1, WAN alternativa via PPPoE/pppoe-out1, status do IPv6), mapeamento de portas do Docker Compose e tabela de hosts monitorados por sistema.
-
-### Processo
-- Branch `etapa-04-docs-architecture-topology` criada a partir da main atualizada.
-- PR mergeado na main; branch remota e local deletadas; main local sincronizada.
-
 Registro cronológico da evolução deste laboratório de observabilidade.
 
 ## 2026-08-27
