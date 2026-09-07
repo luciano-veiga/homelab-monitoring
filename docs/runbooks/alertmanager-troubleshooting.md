@@ -55,8 +55,20 @@ O arquivo `alertmanager/alertmanager.yml` (com credenciais reais) está no `.git
 *E-mail recebido automaticamente quando a CPU voltou ao normal,
 confirmando o ciclo completo firing -> resolved.*
 
+![Alerta de disco - firing recebido no webhook](evidencias-alertmanager/04-alerta-disco-firing-webhook.png)
+*Payload completo recebido pelo webhook-receiver quando o alerta HighDiskUsageThinkCentre entrou em firing, apos ocupacao real de disco via fallocate.*
+
+![Alerta de disco - resolved por e-mail](evidencias-alertmanager/05-alerta-disco-resolved-email.png)
+*E-mail de resolucao (verde) recebido apos a remocao do arquivo temporario e normalizacao do espaco em disco.*
+
+## Teste das regras InstanceDown e HighDiskUsageThinkCentre
+
+**InstanceDown:** container `snmp-exporter` parado propositalmente (`docker compose stop snmp-exporter`), fazendo o job `mikrotik-snmp` cair para `up == 0`. Regra transicionou para `firing` (severity: critical) em pouco mais de 1 minuto, confirmada no Alertmanager e no webhook. Container religado (`docker compose start snmp-exporter`); alerta resolvido automaticamente assim que o Prometheus voltou a marcar o alvo como `up`, confirmado por e-mail e webhook.
+
+**HighDiskUsageThinkCentre:** espaco em disco reduzido artificialmente com `fallocate -l 10G bigfile.tmp`, levando o espaco livre de 23% para cerca de 14%, abaixo do threshold de 15%. Regra transicionou `inactive` -> `pending` -> `firing` apos os 5 minutos de `for:`, confirmada no Alertmanager e no webhook. Arquivo temporario removido (`rm bigfile.tmp`); alerta resolvido, confirmado por e-mail.
+
+**Observacao de troubleshooting:** a notificacao de `resolved` do HighDiskUsageThinkCentre chegou por e-mail mas nao foi registrada no `webhook-receiver/alerts.log` dentro da janela observada — comportamento assimetrico entre os dois canais que nao impactou a validacao (o e-mail confirmou a resolucao), mas fica registrado como ponto de atencao para investigacao futura.
+
 ## Próximos passos
 
-- Testar o alerta InstanceDown (ex: parando o container node-exporter ou snmp-exporter)
-- Testar o alerta HighDiskUsageThinkCentre com carga real de disco
 - Avançar para a etapa de incidentes controlados (MTTD/MTTR)

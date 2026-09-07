@@ -25,4 +25,6 @@ Este documento define os indicadores (SLI) e objetivos (SLO) de estabilidade par
 | 2026-08-30 | Zabbix (server+web+db) | up | Dashboard Global view, Zabbix server is running: Yes |
 | 2026-08-30 | MikroTik hEX S (via Zabbix) | up | Latest data com 75 itens coletando (LLD SNMP) |
 | 2026-09-02 | ThinkCentre M720s (Zabbix Agent) | up | 43 items, 15 triggers, 8 graphs coletando via Latest data |
-| 2026-09-06 | Alertmanager (regra HighCPUUsageThinkCentre) | firing e entregue | stress-ng gerou CPU real >85%%; alerta passou inactive->pending->firing; recebido no Alertmanager (state: active); entregue por e-mail e webhook (alerts.log) |
+| 2026-09-06 | Alertmanager (regra HighCPUUsageThinkCentre) | firing e entregue | stress-ng gerou CPU real >85%; alerta passou inactive->pending->firing; recebido no Alertmanager (state: active); entregue por e-mail e webhook (alerts.log) |
+| 2026-09-07 | Alertmanager (regra InstanceDown) | firing e resolved, entregue | snmp-exporter parado propositalmente; alerta passou inactive->firing (severity critical) em ~1min; resolvido automaticamente ao religar o container; confirmado no Alertmanager, e-mail e webhook |
+| 2026-09-07 | Alertmanager (regra HighDiskUsageThinkCentre) | firing e resolved, entregue | disco ocupado artificialmente via fallocate (23% -> 14% livre); alerta passou inactive->pending->firing apos 5min; resolvido ao remover o arquivo; confirmado no Alertmanager, e-mail (webhook nao registrou o resolved) |
