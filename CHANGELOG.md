@@ -62,3 +62,11 @@ Registro cronológico da evolução deste laboratório de observabilidade.
 - Teste real de ponta a ponta com stress-ng: alerta HighCPUUsageThinkCentre transicionou inactive -> pending -> firing -> resolved, confirmado no Prometheus, no Alertmanager, por e-mail e por webhook (webhook-receiver/alerts.log)
 - Atualizado docs/inventory.md e docs/stability-criteria.md
 - Etapa 05 (Alertmanager) concluida para a regra HighCPUUsageThinkCentre; HighDiskUsageThinkCentre e InstanceDown ainda pendentes de teste real
+## 2026-09-12
+- Iniciada a Etapa 07 (Runbooks SRE), consolidando os padroes observados nos Incidentes 01 e 02 e no teste de ponta a ponta do Alertmanager
+- Criado docs/runbooks/runbook-instancedown.md com referencia real de MTTD/MTTR dos Incidentes 01 e 02
+- Criado docs/runbooks/runbook-highcpu-thinkcentre.md com referencia ao teste real do Alertmanager (stress-ng)
+- Criado docs/runbooks/runbook-highdisk-thinkcentre.md com referencia ao teste real do Alertmanager (fallocate), incluindo observacao pendente sobre falha de entrega do resolved no webhook
+- Criado docs/runbooks/runbook-mudanca-planejada.md, formalizando a diferenca entre incidente (nao planejado) e manutencao (planejada e silenciada no Alertmanager)
+- Criada pasta docs/mudancas/ (paralela a incidents/) para registrar mudancas planejadas na infraestrutura
+- Criado docs/mudancas/mudanca-01-realocacao-mikrotik-thinkcentre.md, planejando a realocacao fisica do MikroTik e do ThinkCentre e a instalacao futura de um mini rack
