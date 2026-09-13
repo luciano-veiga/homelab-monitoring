@@ -70,3 +70,10 @@ Registro cronológico da evolução deste laboratório de observabilidade.
 - Criado docs/runbooks/runbook-mudanca-planejada.md, formalizando a diferenca entre incidente (nao planejado) e manutencao (planejada e silenciada no Alertmanager)
 - Criada pasta docs/mudancas/ (paralela a incidents/) para registrar mudancas planejadas na infraestrutura
 - Criado docs/mudancas/mudanca-01-realocacao-mikrotik-thinkcentre.md, planejando a realocacao fisica do MikroTik e do ThinkCentre e a instalacao futura de um mini rack
+## 2026-09-13
+- Executada a Mudanca Planejada 01: realocacao fisica do MikroTik e do ThinkCentre para ambiente dedicado, com preparacao para instalacao futura de mini rack
+- Aplicado Silence no Alertmanager (alertname=InstanceDown) durante toda a janela de manutencao, evitando notificacoes desnecessarias de e-mail e webhook
+- Manutencao concluida com sucesso: MikroTik e ThinkCentre religados, targets confirmados UP no Prometheus, nenhum problema novo gerado no Zabbix
+- Duracao total da manutencao: ~1h47min, com silence expirado automaticamente ao fim da janela programada
+- Atualizado docs/mudancas/mudanca-01-realocacao-mikrotik-thinkcentre.md com timestamps e evidencias completas
+- Etapa 07 (Runbooks SRE) totalmente validada com um caso real de mudanca planejada
