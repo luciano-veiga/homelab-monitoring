@@ -45,8 +45,12 @@ O MikroTik hEX S é monitorado por dois caminhos independentes, documentados em 
 - [x] Stack básica (Prometheus + Grafana + Node Exporter)
 - [x] MikroTik integrado via SNMP (Prometheus + snmp_exporter)
 - [x] Zabbix como segundo pilar de monitoramento, com LLD via SNMP
-- [ ] Alertmanager configurado para alertar via webhook
+- [x] Alertmanager configurado com alertas reais via e-mail e webhook
+- [x] Incidentes controlados documentados (MTTD/MTTR reais)
+- [x] Runbooks SRE de resposta a alerta e de mudança planejada
+- [x] Mudança planejada real executada e documentada (realocação física)
 - [ ] Dashboard customizado no Grafana com métricas de rede (MikroTik)
+- [ ] CI/CD (GitHub Actions) e release v1.0.0
 - [ ] Exportar métricas de um dos scripts do `devops-automation-scripts` (ex: healthcheck)
 
 ## Como parar e limpar
@@ -67,6 +71,13 @@ O MikroTik hEX S é monitorado por dois caminhos independentes, documentados em 
 **Integração MikroTik → Prometheus → Grafana, tráfego real da interface ether2:**
 
 ![tráfego MikroTik via SNMP no Grafana](./docs/grafana-mikrotik-snmp-trafego.png)
+
+
+**Ambiente físico do laboratório após a Mudança Planejada 01 (realocação do MikroTik e do ThinkCentre para espaço dedicado, com previsão de mini rack):**
+
+![ambiente físico do laboratório](./docs/assets/ambiente-fisico-laboratorio.jpg)
+
+> *Nota: esta foto reflete o estado físico do ambiente em 2026-09-13. Será atualizada conforme o laboratório evoluir (ex: instalação do mini rack).*
 
 ## Documentação adicional
 
