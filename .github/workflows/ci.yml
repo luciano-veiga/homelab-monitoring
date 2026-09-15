@@ -22,7 +22,9 @@ jobs:
           sudo mv prometheus-2.53.0.linux-amd64/promtool /usr/local/bin/
 
       - name: Validar config do Prometheus
-        run: promtool check config prometheus/prometheus.yml
+        run: |
+          sed 's|/etc/prometheus/rules.yml|rules.yml|' prometheus/prometheus.yml > /tmp/prometheus-ci.yml
+          promtool check config /tmp/prometheus-ci.yml
 
       - name: Validar regras do Prometheus
         run: promtool check rules rules.yml
