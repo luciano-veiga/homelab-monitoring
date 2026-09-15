@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validar sintaxe do docker-compose.yml
+        run: docker compose config
+
+      - name: Instalar promtool
+        run: |
+          curl -sL https://github.com/prometheus/prometheus/releases/download/v2.53.0/prometheus-2.53.0.linux-amd64.tar.gz | tar xz
+          sudo mv prometheus-2.53.0.linux-amd64/promtool /usr/local/bin/
+
+      - name: Validar config do Prometheus
+        run: promtool check config prometheus/prometheus.yml
+
+      - name: Validar regras do Prometheus
+        run: promtool check rules rules.yml
+
+      - name: Instalar amtool
+        run: |
+          curl -sL https://github.com/prometheus/alertmanager/releases/download/v0.27.0/alertmanager-0.27.0.linux-amd64.tar.gz | tar xz
+          sudo mv alertmanager-0.27.0.linux-amd64/amtool /usr/local/bin/
+
+      - name: Validar config do Alertmanager
+        run: amtool check-config alertmanager/alertmanager.yml.example
+
+  smoke-test:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Preparar arquivo de credenciais de teste
+        run: cp alertmanager/alertmanager.yml.example alertmanager/alertmanager.yml
+
+      - name: Subir os containers
+        run: docker compose up -d prometheus alertmanager grafana webhook-receiver
+
+      - name: Aguardar inicializacao
+        run: sleep 15
+
+      - name: Healthcheck do Prometheus
+        run: curl -sf http://localhost:9090/-/healthy
+
+      - name: Healthcheck do Alertmanager
+        run: curl -sf http://localhost:9093/-/healthy
+
+      - name: Healthcheck do Grafana
+        run: curl -sf http://localhost:3001/api/health
+
+      - name: Derrubar os containers
+        if: always()
+        run: docker compose down -v
