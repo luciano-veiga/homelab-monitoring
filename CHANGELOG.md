@@ -77,3 +77,10 @@ Registro cronológico da evolução deste laboratório de observabilidade.
 - Duracao total da manutencao: ~1h47min, com silence expirado automaticamente ao fim da janela programada
 - Atualizado docs/mudancas/mudanca-01-realocacao-mikrotik-thinkcentre.md com timestamps e evidencias completas
 - Etapa 07 (Runbooks SRE) totalmente validada com um caso real de mudanca planejada
+## 2026-09-15
+- Etapa 08 (CI/CD) concluida: workflow de GitHub Actions com dois jobs
+  - validate: docker compose config, promtool check config/rules, amtool check-config
+  - smoke-test: sobe os containers reais no runner e confirma healthcheck de Prometheus, Alertmanager e Grafana
+- Processo de debug documentado como evidencia real: 2 iteracoes de correcao necessarias (caminho absoluto de rule_files nao existe fora do container; ajuste de path apos copia do rules.yml para /tmp)
+- PR #14 mergeado na main apos 3 execucoes do Actions (2 falhas corrigidas, 1 sucesso)
+- Atualizado roadmap do README marcando CI/CD como concluido
