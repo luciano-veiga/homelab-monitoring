@@ -50,7 +50,7 @@ O MikroTik hEX S é monitorado por dois caminhos independentes, documentados em 
 - [x] Runbooks SRE de resposta a alerta e de mudança planejada
 - [x] Mudança planejada real executada e documentada (realocação física)
 - [ ] Dashboard customizado no Grafana com métricas de rede (MikroTik)
-- [ ] CI/CD (GitHub Actions) e release v1.0.0
+- [x] CI/CD (GitHub Actions) com validacao e smoke test automatizados
 - [ ] Exportar métricas de um dos scripts do `devops-automation-scripts` (ex: healthcheck)
 
 ## Como parar e limpar
