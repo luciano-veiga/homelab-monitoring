@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extrair trecho do CHANGELOG para esta versao
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "Release automatica ${TAG}" > release-notes.md
+          echo "" >> release-notes.md
+          echo "Consulte o CHANGELOG.md completo para o historico detalhado deste laboratorio." >> release-notes.md
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes.md
+          generate_release_notes: true
