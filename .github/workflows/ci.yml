@@ -23,7 +23,8 @@ jobs:
 
       - name: Validar config do Prometheus
         run: |
-          sed 's|/etc/prometheus/rules.yml|rules.yml|' prometheus/prometheus.yml > /tmp/prometheus-ci.yml
+          cp rules.yml /tmp/rules.yml
+          sed 's|/etc/prometheus/rules.yml|/tmp/rules.yml|' prometheus/prometheus.yml > /tmp/prometheus-ci.yml
           promtool check config /tmp/prometheus-ci.yml
 
       - name: Validar regras do Prometheus
